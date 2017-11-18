@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>User Registration</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>User Registration</h2>
+        <form action="/process" method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="fName">First Name:</label>
+                <input type="text" class="form-control" id="fName" placeholder="Enter first name" name="fName">
+            </div>
+
+            <div class="form-group">
+                <label for="lName">Last Name:</label>
+                <input type="text" class="form-control" id="lName" placeholder="Enter last name" name="lName">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            </div>
+
+            <div class="form-group">
+                <label for="birthdate">Date of Birth: </label>
+                <input id="datefield" class="form-control" name="birthdate" type='date' min='1899-01-01' max={{max}}></input>
+            </div>
+
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+            </div>
+
+            <div class="form-group">
+                <label for="confirm">Confirm Password:</label>
+                <input type="password" class="form-control" id="confirm" placeholder="Confirm password" name="confirm">
+            </div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+
+        </form>
+        <p class="text-center">Have an account? |
+            <a href="/">Log in</a>
+        </p>
+        {% if messages %} {% for message in messages %}
+        <p class="text-danger text-center">{{message}}</p>
+        {% endfor %} {% endif %}
+    </div>
+
+</body>
+
+</html>
