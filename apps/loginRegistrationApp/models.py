@@ -52,23 +52,25 @@ class UserManager(models.Manager):
         else:
             return (False, errors)
 
-    def valLogin(self,postData):
+def valLogin(self,postData):
         errors=[]
-        if postData['email']=="" and postData['pwd']=="":
+        if postData['email'] == "" and postData['pwd'] == "":
             errors.append("Please fill out the form to login")
             return (False, errors)
-        if postData['email']=="":
+        if postData['email'] == "":
             errors.append("Email is required")
-        elif postData['pwd']=="":
+        elif postData['pwd'] == "":
             errors.append("Password is required")
-        elif len(postData['pwd'])>15:
-            errors.append("Password is too long")
-        if not User.objects.filter(email=postData['email']) or not User.objects.filter(password=postData['pwd']):
-            errors.append("Incorrect email or password")
+        if not User.objects.filter(email = postData['email']):
+            errors.append("Incorrect email")
+        else:
+            password = User.objects.filter(email = postData['email'])[0].password
+            if not bcrypt.hashpw(postData['pwd'].encode(), password.encode()):
+                errors.append("Incorrect password")
         if len(errors)!=0:
             return (False, errors)
         else:
-            user = self.get(email=postData['email'])
+            user = self.get(email = postData['email'])
             return (True, user)
 
 # updated User to accomodate all form input from client
